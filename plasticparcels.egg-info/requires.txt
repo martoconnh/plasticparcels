@@ -1,0 +1,13 @@
+parcels<4,>=3.0.2
+shapely
+geopandas
+pytest
+
+[dev]
+black==24.4.0
+darglint==1.8.1
+flake8==7.0.0
+Flake8-pyproject==1.2.3
+isort==5.13.2
+pydocstyle==6.3.0
+sort-all==1.2.0
