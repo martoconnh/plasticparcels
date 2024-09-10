@@ -15,10 +15,11 @@ output_file = 'C:/Users/martino.rial/Escritorio/resultados_parcels/my_example.za
 def create_fieldset_from_netcdf(settings):
     nc_files_path = settings['ocean']['directory']
     nc_files = [os.path.join(nc_files_path,arquivo) for arquivo in os.listdir(nc_files_path) if arquivo.endswith('.nc4')]
+    nc_files = sorted(nc_files)
     variables = {'U': 'u',
                  'V': 'v',
-                 'absolute_salinity': 'absolute_salinity',
-                 'conservative_temperature': 'conservative_temperature'}
+                 'absolute_salinity': 'salt',
+                 'conservative_temperature': 'temp'}
     dimensions = {'time': 'time',
                   'lon': 'lon',
                   'lat': 'lat'}
@@ -81,12 +82,11 @@ def particle_dictionary(settings):
     return pdict
 
 # Load the model settings
-settings_file = '/mnt/c/Users/martino.rial/Escritorio/git/plasticparcels/docs/examples/my_example_settings.json'
+settings_file = 'C:/Users/martino.rial/Escritorio/git/plasticparcels/docs/examples/my_example_settings.json'
 settings = pp.utils.load_settings(settings_file)
 
-# En qué unidades están a latitude e lonxitude ?????
 # Set ocean model indices
-settings['ocean']['indices'] = {'lon':range(3300, 4000), 'lat':range(1850, 2400), 'depth':range(0,1)}
+settings['ocean']['indices'] = {'lon':range(3300, 4000), 'lat':range(1850, 2400), 'depth':range(0,2)}
 
 # Create the simulation settings
 settings['simulation'] = {
@@ -104,13 +104,14 @@ settings['use_wind'] = False
 
 # Plastic type settings
 settings['plastictype'] = {
-    'wind_coefficient' : 0.01,  # Percentage of wind to apply to particles
-    'plastic_diameter' : 0.001, # Plastic particle diameter (m)
+    'wind_coefficient' : 0.00,  # Percentage of wind to apply to particles
+    'plastic_diameter' : 0.000, # Plastic particle diameter (m)
     'plastic_density' : 1030.,  # Plastic particle density (kg/m^3)
 }
 
 # Create the fieldset
 fieldset = create_fieldset_from_netcdf(settings)
+pdb.set_trace()
 
 # Create the particleset
 emission_times, total_particles = caudal_reader(settings)  # Interval between particles for each day (in seconds)
@@ -127,5 +128,7 @@ outputdt = settings['simulation']['outputdt']
 # Create the particle file where output will be stored
 pfile = pp.ParticleFile(output_file, pset, settings=settings, outputdt=outputdt)
 
+pdb.set_trace()
 # Execute the simulation
 pset.execute(kernels, runtime=runtime, dt=dt, output_file=pfile)
+

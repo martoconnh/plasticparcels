@@ -8,13 +8,15 @@
     "use_wind": false,
     "ocean": {
         "modelname": "MOHID",
-        "directory": "C:/Users/martino.rial/Escritorio/datos_mohid/hidro/2017/",
-        "filename_style": "MOHID_Hydrodynamic_Arousa_",
+        "directory": "C:/Users/martino.rial/Escritorio/datos_mohid/hidro/2D/",
+        "filename_style": "MOHID_Arousa_",
         "ocean_mesh": "20170701.nc4",
-        "bathymetry_mesh": "domain_ORCA0083-N006/PSY4V3R1_mesh_zgr.nc",
+        "bathymetry_mesh": "Bathymetry_Arousa.nc4",
         "variables": {
             "U": "u",
-            "V": "v"
+            "V": "v",
+            "Salinity": "salt",
+            "Temperature": "temp"
         },
         "dimensions": {
             "U": {
@@ -23,6 +25,16 @@
                 "time": "time"
             },
             "V": {
+                "lon": "lon",
+                "lat": "lat",
+                "time": "time"
+            },
+            "Salinity": {
+                "lon": "lon",
+                "lat": "lat",
+                "time": "time"
+            },
+            "Temperature": {
                 "lon": "lon",
                 "lat": "lat",
                 "time": "time"
