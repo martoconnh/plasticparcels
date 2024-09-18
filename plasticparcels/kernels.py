@@ -632,6 +632,11 @@ def VerticalMixing(particle, fieldset, time):
 # Biofouling related kernels
 
 
+# def beaching():
+#     check position stuff
+#     uptade particle beaching variable like above
+
+
 def unbeaching(particle, fieldset, time):
     """ A kernel to unbeach particles"""
     # Measure the velocity field at the final particle location

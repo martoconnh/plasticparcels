@@ -249,6 +249,7 @@ def create_particleset(fieldset, settings, release_locations):
                  Variable('absolute_salinity', dtype=np.float64, initial=np.nan, to_write=False),
                  Variable('algae_amount', dtype=np.float64, initial=0., to_write=False),
                  Variable('plastic_amount', dtype=np.float32, initial=0., to_write=True)]
+                # Add beaching variable to each particle
 
     for variable in variables:
         setattr(PlasticParticle, variable.name, variable)
