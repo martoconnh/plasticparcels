@@ -228,7 +228,7 @@ def Biofouling(particle, fieldset, time):
             A   -> Amount of algae attached to a particle
 
     :math:`R` models the respiration of the algae attached to the surface of the particle
-        R = Q_10^[(T-20)/10] * R_20 * A`,
+        R = Q_10^[(T-20)/10] * R_20 * A
             Q_10  -> Temperature coefficient, respiration variantion due to 10ºC temperature increase
             T     -> Temperature
             R_20  -> Respiration rate
