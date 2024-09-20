@@ -30,6 +30,10 @@ docs/examples/example_Italy_coast_settings.json
 docs/examples/example_add_your_own_kernel.ipynb
 docs/examples/example_add_your_own_kernel_settings.json
 docs/examples/example_initialisation_maps.ipynb
+docs/examples/my_examples/dwl_parcels_data.py
+docs/examples/my_examples/my_example.py
+docs/examples/my_examples/my_example_settings.json
+docs/examples/my_examples/plot_results.py
 docs/paper/example.png
 docs/paper/initialisation_maps.png
 docs/paper/logo.png

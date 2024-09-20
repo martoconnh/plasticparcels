@@ -23,16 +23,12 @@ def create_fieldset_from_netcdf(settings):
                  'V': 'v'}
                  #'absolute_salinity': 'salt',
                  #'conservative_temperature': 'temp'}
-    # dimensions = {'time': 'time',
-    #               'lon': 'lon',
-    #               'lat': 'lat'}
     dimensions = {"U": {"lon": "lon",
                         "lat": "lat",
                         "time": "time"},
                   "V": {"lon": "lon",
                         "lat": "lat",
                         "time": "time"}}
-    # create  (lat,lon) netcdf file for ocean mesh 
     filenames = {'U': {'lon': ocean_mesh, 'lat': ocean_mesh, 'data': nc_files},
                  'V': {'lon': ocean_mesh, 'lat': ocean_mesh, 'data': nc_files}}
     # Add grid type
