@@ -5,3 +5,6 @@ input_data/
 **.zarr
 docs/_build/*
 docs/_downloads
+plasticparcels.egg-info
+**/_version_setup.py
+build
