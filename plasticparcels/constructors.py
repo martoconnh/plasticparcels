@@ -55,7 +55,6 @@ def create_hydrodynamic_fieldset(settings):
     if not settings['use_3D']:
         indices['depth'] = range(0, 2)
 
-
     # USA FieldSet.from_nemo --> CAMBIAR POR FieldSet.from_netcdf ????
 
     # Load the fieldset
@@ -91,6 +90,8 @@ def create_hydrodynamic_fieldset(settings):
     return fieldset
 
 # Esta funcion creo que solo sirve para añadir Stokes, Windage, Biofouling
+
+
 def create_fieldset(settings):
     """ A constructor method to create a Parcels.Fieldset with all fields necessary for a plasticparcels simulation
 
@@ -239,7 +240,6 @@ def create_particleset(fieldset, settings, release_locations):
     plastic_diameters = np.full(lons.shape, settings['plastictype']['plastic_diameter'])
     wind_coefficients = np.full(lons.shape, settings['plastictype']['wind_coefficient'])
 
-
     PlasticParticle = JITParticle
     variables = [Variable('plastic_diameter', dtype=np.float32, initial=np.nan, to_write=False),
                  Variable('plastic_density', dtype=np.float32, initial=np.nan, to_write=False),
@@ -249,7 +249,7 @@ def create_particleset(fieldset, settings, release_locations):
                  Variable('absolute_salinity', dtype=np.float64, initial=np.nan, to_write=False),
                  Variable('algae_amount', dtype=np.float64, initial=0., to_write=False),
                  Variable('plastic_amount', dtype=np.float32, initial=0., to_write=True)]
-                # Add beaching variable to each particle
+    # Add beaching variable to each particle
 
     for variable in variables:
         setattr(PlasticParticle, variable.name, variable)
@@ -351,7 +351,7 @@ def create_kernel(fieldset):
 
     if fieldset.use_stokes:
         kernels.append(StokesDrift)
-        
+
     if fieldset.use_wind:
         kernels.append(WindageDrift)
 

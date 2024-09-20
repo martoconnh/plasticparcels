@@ -58,7 +58,6 @@
             "time": "time_counter"
         }
     },
-    
     "wind": {
         "directory": "/storage/shared/oceanparcels/output_data/data_Michael/ERA5/wind/",
         "filename_style": "ERA5_global_wind_monthly_",
@@ -73,7 +72,6 @@
         },
         "indices": {}
     },
-
     "unbeaching": {
         "filename": "input_data/NEMO0083/land_current_NEMO0083.nc",
         "variables": {
@@ -85,15 +83,13 @@
             "lon": "lon"
         }
     },
-
     "simulation": {
         "start_date": null,
         "runtime": null,
         "dt_write": null,
         "dt_timestep": null
     },
-
-    "sources":{
+    "sources": {
         "river": "/mnt/c/Users/martino.rial/Escritorio/datos_mohid/aforos_rios/caudal_1000/discharge_Ulla_jasond2017.dat",
         "latitude": 42.635,
         "longitude": -8.78

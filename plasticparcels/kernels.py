@@ -532,7 +532,6 @@ def VerticalMixing(particle, fieldset, time):
 # Biofouling related kernels
 
 
-
 # def beaching():
 #     check position stuff
 #     uptade particle beaching variable like above
@@ -605,7 +604,6 @@ def checkThroughBathymetry(particle, fieldset, time):
 
     elif potential_depth > 3900:  # If particle >3.9km deep, stick it there
         particle_ddepth = 3900 - particle.depth  # noqa
-
 
 
 def periodicBC(particle, fieldset, time):
