@@ -15,8 +15,9 @@
         "variables": {
             "U": "u",
             "V": "v",
-            "Salinity": "salt",
-            "Temperature": "temp"
+            "absolute_salinity": "salt",
+            "conservative_emperature": "temp",
+            "bathymetry": "bathymetry"
         },
         "dimensions": {
             "U": {
@@ -90,7 +91,8 @@
         "dt_timestep": null
     },
     "sources": {
-        "river": "/mnt/c/Users/martino.rial/Escritorio/datos_mohid/aforos_rios/caudal_1000/discharge_Ulla_jasond2017.dat",
+        "river": "/mnt/c/Users/martino.rial/Escritorio/datos_mohid/aforos_rios/discharge_Ulla_jasond2024.csv",
+        "npart": 100,
         "latitude": 42.635,
         "longitude": -8.78
     }
