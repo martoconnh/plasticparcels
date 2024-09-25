@@ -164,3 +164,10 @@ def download_plasticparcels_dataset(dataset: str, settings, data_home=None):
             urlretrieve(url, str(filepath))
 
     return settings
+
+
+def select_period(start_date, end_date, data):
+    """ Select data within a certain period from CSV with dates column """
+    data = data[(data['Data'] >= start_date)  # "Data" means "date" in Galician
+                & (data['Data'] <= end_date)].copy()
+    return data
