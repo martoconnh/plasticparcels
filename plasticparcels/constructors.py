@@ -1,16 +1,17 @@
 import os
+import glob
 import numpy as np
 
 import pandas as pd
 from parcels import FieldSet, Field, ParticleSet, JITParticle, Variable, AdvectionRK4, AdvectionRK4_3D
 from parcels.tools.converters import Geographic, GeographicPolar
 
-from plasticparcels.kernels import PolyTEOS10_bsq, StokesDrift, WindageDrift, SettlingVelocity, Biofouling, VerticalMixing, unbeaching, periodicBC, checkErrorThroughSurface, deleteParticle, checkThroughBathymetry
+from plasticparcels.kernels import PolyTEOS10_bsq, StokesDrift, WindageDrift, SettlingVelocity, Biofouling, VerticalMixing, periodicBC, checkErrorThroughSurface, deleteParticle, checkThroughBathymetry
 from plasticparcels.utils import select_files, select_period
 
 
-def create_fieldset_from_netcdf(settings):
-    """Constructor method to create a Parcels.Fieldset with all fields necessary for a plasticparcels simulation
+def create_hydrodynamic_fieldset_from_netcdf(settings):
+    """Constructor method to create a Parcels.Fieldset with a hydrodynamic field
 
     Parameters
     ----------
@@ -26,22 +27,11 @@ def create_fieldset_from_netcdf(settings):
     nc_files_path = settings['ocean']['directory']
     ocean_mesh = settings['ocean']['ocean_mesh']
     bathymetry_mesh = settings['ocean']['bathymetry_mesh']
-    nc_files = [os.path.join(nc_files_path, arquivo) for arquivo in os.listdir(nc_files_path) if arquivo.endswith('.nc4')]
+    nc_files = glob.glob(nc_files_path)
     nc_files = sorted(nc_files)
 
-    variables = {'U': 'u',
-                 'V': 'v',
-                 'W': 'w',
-                 'absolute_salinity': 'salt',
-                 'conservative_temperature': 'temp',
-                 'bathymetry': 'bathymetry'}
-
-    dimensions = {'U': {'lon': 'lon', 'lat': 'lat', 'depth': 'depth', 'time': 'time'},
-                  'V': {'lon': 'lon', 'lat': 'lat', 'depth': 'depth', 'time': 'time'},
-                  'W': {'lon': 'lon', 'lat': 'lat', 'depth': 'depth', 'time': 'time'},
-                  'absolute_salinity': {'lon': 'lon', 'lat': 'lat', 'depth': 'depth', 'time': 'time'},
-                  'conservative_temperature': {'lon': 'lon', 'lat': 'lat', 'depth': 'depth', 'time': 'time'},
-                  'bathymetry': {'lon': 'lon', 'lat': 'lat', 'depth': 'depth'}}
+    variables = settings['ocean']['variables']
+    dimensions = settings['ocean']['dimensions']
 
     filenames = {'U': {'lon': ocean_mesh, 'lat': ocean_mesh, 'depth': ocean_mesh, 'data': nc_files},
                  'V': {'lon': ocean_mesh, 'lat': ocean_mesh, 'depth': ocean_mesh, 'data': nc_files},
@@ -68,6 +58,42 @@ def create_fieldset_from_netcdf(settings):
     fieldset.add_constant('G', 9.81)  # Gravitational constant [m s-2]
     fieldset.add_constant('use_3D', settings['use_3D'])
     fieldset.add_constant('z_start', 0.5)
+    return fieldset
+
+
+def create_fieldset_from_netcdf(settings):
+    """ A constructor method to create a Parcels.Fieldset with all fields necessary for a plasticparcels simulation
+
+    Parameters
+    ----------
+    settings :
+        A dictionary of model settings used to create the fieldset
+
+    Returns
+    -------
+    fieldset
+        A parcels.FieldSet object
+    """
+    fieldset = create_hydrodynamic_fieldset_from_netcdf(settings)
+    if fieldset.use_wind:
+        print('Including wind data into fieldset')
+        wind_files_path = settings['wind']['directory']
+        windfiles = glob.glob(wind_files_path)
+        windfiles = sorted(windfiles)
+
+        variables = settings['wind']['variables']
+        dimensions = settings['wind']['dimensions']
+
+        filenames_wind = {'Wind_U': windfiles,
+                          'Wind_V': windfiles}
+
+        fieldset_wind = FieldSet.from_netcdf(filenames_wind, variables, dimensions)
+        fieldset_wind.Wind_U.units = GeographicPolar()
+        fieldset_wind.Wind_V.units = Geographic()
+
+        fieldset.add_field(fieldset_wind.Wind_U)
+        fieldset.add_field(fieldset_wind.Wind_V)
+
     return fieldset
 
 
@@ -151,8 +177,6 @@ def create_hydrodynamic_fieldset(settings):
 
     return fieldset
 
-
-# Esta funcion creo que solo sirve para añadir Stokes, Windage, Biofouling
 
 def create_fieldset(settings):
     """ A constructor method to create a Parcels.Fieldset with all fields necessary for a plasticparcels simulation
@@ -492,14 +516,15 @@ def create_kernel(fieldset):
         kernels.append(StokesDrift)
 
     if fieldset.use_wind:
+        # print('Windage added')
         kernels.append(WindageDrift)
 
     if fieldset.use_mixing:
         kernels.append(VerticalMixing)
 
     # Add the unbeaching kernel to the beginning
-    if fieldset.use_stokes or fieldset.use_wind:
-        kernels.append(unbeaching)
+    # if fieldset.use_stokes or fieldset.use_wind:
+    #     kernels.append(unbeaching)
 
     if fieldset.use_3D:
         kernels.append(checkThroughBathymetry)

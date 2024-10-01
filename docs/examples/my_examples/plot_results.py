@@ -16,7 +16,7 @@ import cartopy.feature as cfeature
 
 
 # Load the ParticleFile
-ds = xr.open_zarr('C:/Users/martino.rial/Escritorio/resultados_parcels/my_example.zarr')
+ds = xr.open_zarr('/mnt/c/Users/martino.rial/Escritorio/resultados_parcels/my_example.zarr')
 
 # Arousa limits
 lat_min = 42.38

@@ -49,13 +49,13 @@ settings['simulation'] = {
 
 # Overwrite some settings
 settings['use_3D'] = False
-settings['use_wind'] = False
+settings['use_wind'] = True
 settings['use_biofouling'] = False
 settings['use_stokes'] = False
 
 # Plastic type settings
 settings['plastictype'] = {
-    'wind_coefficient': 0.01,  # Percentage of wind to apply to particles
+    'wind_coefficient': 0.03,  # Percentage of wind to apply to particles
     'plastic_diameter': 0.001,  # Plastic particle diameter (m)
     'plastic_density': 1030.}  # Plastic particle density (kg/m^3)
 
@@ -75,6 +75,7 @@ outputdt = settings['simulation']['outputdt']
 
 # Create the particle file where output will be stored
 pfile = pp.particlefile.ParticleFile(output_file, pset, settings=settings, outputdt=outputdt)
+
 
 pdb.set_trace()
 pset.execute(kernels, runtime=runtime, dt=dt, output_file=pfile)
