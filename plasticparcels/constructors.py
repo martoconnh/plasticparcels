@@ -41,6 +41,7 @@ def create_hydrodynamic_fieldset_from_netcdf(settings):
                  'bathymetry': {'lon': ocean_mesh, 'lat': ocean_mesh, 'data': bathymetry_mesh}}
 
     if not settings['use_3D']:
+        print('Using 2D model')
         variables.pop('W', None)
         dimensions.pop('W', None)
         filenames.pop('W', None)
@@ -48,6 +49,8 @@ def create_hydrodynamic_fieldset_from_netcdf(settings):
             value.pop('depth', None)
         for key, value in filenames.items():
             value.pop('depth', None)
+    else:
+        print('Using 3D model')
 
     fieldset = FieldSet.from_netcdf(filenames, variables, dimensions, allow_time_extrapolation=True)
 

@@ -1,7 +1,6 @@
 
 '''Example of plotting results'''
 
-import pdb
 # Library imports
 import xarray as xr
 import numpy as np
@@ -16,7 +15,7 @@ import cartopy.feature as cfeature
 
 
 # Load the ParticleFile
-ds = xr.open_zarr('/mnt/c/Users/martino.rial/Escritorio/resultados_parcels/my_example.zarr')
+ds = xr.open_zarr('/mnt/c/Users/martino.rial/Escritorio/resultados_parcels/3D_wind.zarr')
 
 # Arousa limits
 lat_min = 42.38

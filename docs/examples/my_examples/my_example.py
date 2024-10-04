@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 import plasticparcels as pp
 
 
-output_file = '/mnt/c/Users/martino.rial/Escritorio/resultados_parcels/my_example.zarr'
+output_file = '/mnt/c/Users/martino.rial/Escritorio/resultados_parcels/3D_wind.zarr'
 settings_file = '/mnt/c/Users/martino.rial/Escritorio/git/plasticparcels/docs/examples/my_examples/my_example_settings.json'
 
 
@@ -48,7 +48,7 @@ settings['simulation'] = {
 }
 
 # Overwrite some settings
-settings['use_3D'] = False
+settings['use_3D'] = True
 settings['use_wind'] = True
 settings['use_biofouling'] = False
 settings['use_stokes'] = False
